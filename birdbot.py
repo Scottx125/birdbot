@@ -55,9 +55,13 @@ playqueue = []
 # Initialise function
 @client.event
 async def on_ready():
-    asyncio.Task(Autoplay())
-    await client.send_message(client.get_channel(gvars.bot), "The Bot is now online!")
-    print("Birdbot online!")
+    try:
+        asyncio.Task(Autoplay())
+        await client.send_message(client.get_channel(gvars.bot), "The Bot is now online!")
+        print("Birdbot online!")
+    except Exception as e:
+        await write_errors("Exception occured in on_ready: {0} at {1}".format(e, str(datetime.now())))
+    return
 
 @client.event
 async def on_message(message):
